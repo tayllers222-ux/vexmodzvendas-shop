@@ -2,65 +2,109 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101014">
-  <title>VexModz Vendas</title>
+  <title>VEXMODZ VENDAS</title>
+
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       background: #101014;
       color: #fff;
       font-family: Arial, sans-serif;
     }
+
     header {
       padding: 22px 16px;
       background: #19191f;
       border-bottom: 1px solid #303039;
       text-align: center;
     }
+
     header h1 { margin: 0; color: #a78bfa; }
     header p { color: #aaa; margin-bottom: 0; }
-    main { max-width: 1000px; margin: auto; padding: 20px 16px; }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px 16px;
+    }
+
     .hero {
-      padding: 28px 20px;
+      padding: 26px 20px;
       border-radius: 16px;
       background: linear-gradient(135deg, #292044, #171720);
       text-align: center;
       margin-bottom: 24px;
     }
+
     .hero h2 { margin-top: 0; }
     .hero p { color: #ddd; line-height: 1.5; }
-    .section-title { margin: 24px 0 16px; }
-    #products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0;
+      border-radius: 8px;
+      border: 1px solid #454552;
+      background: #15151c;
+      color: #fff;
+      font-size: 15px;
     }
-    .product {
-      background: #1b1b23;
-      border: 1px solid #34343e;
-      border-radius: 14px;
-      padding: 18px;
-    }
-    .product h3 { margin-top: 0; }
-    .price { color: #a78bfa; font-size: 23px; font-weight: bold; }
+
     button {
       width: 100%;
       border: 0;
       border-radius: 9px;
       padding: 13px;
+      margin-top: 9px;
       background: #8b5cf6;
       color: white;
       font-weight: bold;
       font-size: 15px;
       cursor: pointer;
     }
-    .secondary {
-      background: #292932;
-      margin-top: 10px;
+
+    button:disabled { opacity: .6; }
+
+    .secondary { background: #292932; }
+
+    .product {
+      background: #1b1b23;
+      border: 1px solid #34343e;
+      border-radius: 14px;
+      padding: 18px;
+      overflow-wrap: anywhere;
     }
-    #status { color: #bbb; text-align: center; padding: 20px 0; }
+
+    .product h3 { margin-top: 0; }
+    .price { color: #a78bfa; font-size: 23px; font-weight: bold; }
+
+    #products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    #status, #userStatus {
+      color: #bbb;
+      text-align: center;
+      padding: 10px 0;
+      overflow-wrap: anywhere;
+    }
+
+    #admin {
+      background: #1b1b23;
+      border: 1px solid #454552;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 25px;
+    }
+
+    .notice { color: #fbbf24; font-size: 13px; }
+
     footer {
       text-align: center;
       padding: 25px;
@@ -70,47 +114,300 @@
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>VEXMODZ VENDAS</h1>
-    <p>Sua loja de produtos digitais</p>
-  </header>
+<header>
+  <h1>VEXMODZ VENDAS</h1>
+  <p>Sua loja de produtos digitais</p>
+</header>
 
-  <main>
-    <section class="hero">
-      <h2>Bem-vindo à VexModz!</h2>
-      <p>Confira nossos produtos digitais e novidades.</p>
-      <button onclick="loginGoogle()">Entrar com Google</button>
-      <button class="secondary" onclick="loginEmail()">Entrar com e-mail</button>
-      <p id="userStatus">Você não está conectado.</p>
-      <button class="secondary" id="logout" onclick="sair()" hidden>Sair da conta</button>
-    </section>
+<main>
+  <section class="hero">
+    <h2>Bem-vindo à VexModz!</h2>
+    <p>Confira nossos produtos digitais e novidades.</p>
 
-    <h2 class="section-title">Nossos produtos</h2>
-    <div id="products">
-      <p>Os produtos serão carregados quando conectarmos o Firebase.</p>
+    <button id="googleBtn">Entrar com Google</button>
+
+    <div id="emailArea">
+      <input id="email" type="email" placeholder="Seu e-mail"
+             autocomplete="email">
+      <input id="password" type="password" placeholder="Sua senha"
+             autocomplete="current-password">
+
+      <button id="loginBtn">Entrar com e-mail</button>
+      <button id="registerBtn" class="secondary">Criar conta</button>
+      <button id="resetBtn" class="secondary">Recuperar senha</button>
     </div>
-    <p id="status">Catálogo da loja.</p>
 
-    <section id="admin" hidden>
-      <h2>Painel ADM</h2>
-      <p>Área exclusiva do proprietário.</p>
-      <p>O cadastro e a edição de produtos serão adicionados na próxima etapa.</p>
-    </section>
-  </main>
+    <p id="userStatus">Verificando conexão...</p>
+    <button id="logoutBtn" class="secondary" hidden>Sair da conta</button>
+  </section>
 
-  <footer>© 2026 VexModz Vendas</footer>
+  <h2>Nossos produtos</h2>
+  <div id="products">
+    <p>Carregando produtos...</p>
+  </div>
+  <p id="status">Conectando ao catálogo...</p>
 
-  <script>
-    function loginGoogle() {
-      alert("O login Google será conectado ao Firebase na próxima etapa.");
+  <section id="admin" hidden>
+    <h2>Painel ADM</h2>
+    <p>Área do proprietário</p>
+    <p class="notice">
+      O acesso visual é apenas uma interface. Configure as regras
+      de segurança do Firebase antes de usar funções administrativas.
+    </p>
+
+    <h3>Cadastrar produto</h3>
+    <input id="productName" placeholder="Nome do produto">
+    <input id="productPrice" type="number" min="0" step="0.01"
+           placeholder="Preço em reais">
+    <input id="productCategory" placeholder="Categoria">
+    <textarea id="productDescription" placeholder="Descrição"></textarea>
+    <button id="saveProductBtn">Cadastrar produto</button>
+  </section>
+</main>
+
+<footer>© 2026 VEXMODZ VENDAS</footer>
+
+<script type="module">
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+  import {
+    getAuth, GoogleAuthProvider, signInWithPopup,
+    signInWithRedirect, getRedirectResult, signInWithEmailAndPassword,
+    createUserWithEmailAndPassword, sendPasswordResetEmail,
+    signOut, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+  import {
+    getFirestore, collection, query, where, getDocs,
+    addDoc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+  // COLE AQUI OS VALORES DO SEU FIREBASE
+  const firebaseConfig = {
+    apiKey: "COLE_SUA_API_KEY",
+    authDomain: "vexmodzvendas.firebaseapp.com",
+    projectId: "vexmodzvendas",
+    storageBucket: "COLE_SEU_STORAGE_BUCKET",
+    messagingSenderId: "COLE_SEU_MESSAGING_SENDER_ID",
+    appId: "COLE_SEU_APP_ID"
+  };
+
+  // E-mail do proprietário
+  const OWNER_EMAIL = "proomodz999@gmail.com";
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  const $ = id => document.getElementById(id);
+
+  function status(message) {
+    $("status").textContent = message;
+  }
+
+  function userMessage(message) {
+    $("userStatus").textContent = message;
+  }
+
+  function validConfig() {
+    return firebaseConfig.apiKey !== "COLE_SUA_API_KEY" &&
+           firebaseConfig.appId !== "COLE_SEU_APP_ID" &&
+           firebaseConfig.messagingSenderId !==
+             "COLE_SEU_MESSAGING_SENDER_ID" &&
+           firebaseConfig.storageBucket !==
+             "COLE_SEU_STORAGE_BUCKET";
+  }
+
+  $("googleBtn").addEventListener("click", async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (error) {
+      if (["popup-blocked", "operation-not-supported-in-this-environment"]
+          .includes(error.code)) {
+        try {
+          await signInWithRedirect(auth, googleProvider);
+        } catch (redirectError) {
+          userMessage("Erro no Google: " + redirectError.message);
+        }
+      } else {
+        userMessage("Erro no Google: " + error.message);
+      }
     }
-    function loginEmail() {
-      alert("O login por e-mail será conectado ao Firebase na próxima etapa.");
+  });
+
+  $("loginBtn").addEventListener("click", async () => {
+    const email = $("email").value.trim();
+    const password = $("password").value;
+
+    if (!email || !password) {
+      userMessage("Digite seu e-mail e senha.");
+      return;
     }
-    function sair() {
-      alert("O login será conectado ao Firebase na próxima etapa.");
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      userMessage("Não foi possível entrar: " + error.message);
     }
-  </script>
+  });
+
+  $("registerBtn").addEventListener("click", async () => {
+    const email = $("email").value.trim();
+    const password = $("password").value;
+
+    if (!email || password.length < 6) {
+      userMessage("Digite um e-mail e uma senha com pelo menos 6 caracteres.");
+      return;
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      userMessage("Conta criada com sucesso!");
+    } catch (error) {
+      userMessage("Erro ao criar conta: " + error.message);
+    }
+  });
+
+  $("resetBtn").addEventListener("click", async () => {
+    const email = $("email").value.trim();
+
+    if (!email) {
+      userMessage("Digite seu e-mail para recuperar a senha.");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      userMessage("Se a conta existir, você receberá um e-mail de recuperação.");
+    } catch (error) {
+      userMessage("Não foi possível enviar: " + error.message);
+    }
+  });
+
+  $("logoutBtn").addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      userMessage("Erro ao sair: " + error.message);
+    }
+  });
+
+  async function loadProducts() {
+    $("products").innerHTML = "";
+    status("Carregando produtos...");
+
+    try {
+      const q = query(
+        collection(db, "products"),
+        where("active", "==", true)
+      );
+      const result = await getDocs(q);
+
+      if (result.empty) {
+        $("products").textContent = "Nenhum produto disponível.";
+        status("Catálogo atualizado.");
+        return;
+      }
+
+      result.forEach(docSnap => {
+        const p = docSnap.data();
+        const card = document.createElement("article");
+        card.className = "product";
+
+        const title = document.createElement("h3");
+        title.textContent = p.name || "Produto";
+
+        const desc = document.createElement("p");
+        desc.textContent = p.description || "";
+
+        const category = document.createElement("p");
+        category.textContent = "Categoria: " + (p.category || "Digital");
+
+        const price = document.createElement("p");
+        price.className = "price";
+        const value = Number(p.price);
+        price.textContent = Number.isFinite(value)
+          ? value.toLocaleString("pt-BR", {
+              style: "currency", currency: "BRL"
+            })
+          : "Consulte o preço";
+
+        const buy = document.createElement("button");
+        buy.textContent = "Comprar";
+        buy.addEventListener("click", () => {
+          if (!auth.currentUser) {
+            userMessage("Entre na sua conta antes de continuar.");
+            $("email").focus();
+            return;
+          }
+          alert("O pagamento Pix ainda não está configurado.");
+        });
+
+        card.append(title, desc, category, price, buy);
+        $("products").appendChild(card);
+      });
+
+      status("Catálogo atualizado.");
+    } catch (error) {
+      $("products").textContent =
+        "Não foi possível carregar os produtos.";
+      status("Verifique a configuração e as regras do Firestore.");
+      console.error(error);
+    }
+  }
+
+  $("saveProductBtn").addEventListener("click", async () => {
+    const user = auth.currentUser;
+
+    // Esta verificação é apenas visual; não substitui regras de segurança.
+    if (!user || user.email?.toLowerCase() !== OWNER_EMAIL.toLowerCase()) {
+      userMessage("Apenas o proprietário pode usar esta área.");
+      return;
+    }
+
+    const name = $("productName").value.trim();
+    const price = Number($("productPrice").value);
+    const category = $("productCategory").value.trim();
+    const description = $("productDescription").value.trim();
+
+    if (!name || !Number.isFinite(price) || price < 0) {
+      userMessage("Informe nome e preço válido.");
+      return;
+    }
+
+    userMessage(
+      "O cadastro não foi executado: primeiro configure as regras seguras do Firestore."
+    );
+  });
+
+  try {
+    await getRedirectResult(auth);
+  } catch (error) {
+    userMessage("Erro ao voltar do Google: " + error.message);
+  }
+
+  onAuthStateChanged(auth, async user => {
+    $("logoutBtn").hidden = !user;
+    $("admin").hidden =
+      !user || user.email?.toLowerCase() !== OWNER_EMAIL.toLowerCase();
+
+    if (user) {
+      userMessage("Conectado: " + (user.email || "conta Google"));
+    } else {
+      userMessage("Você não está conectado.");
+    }
+
+    if (validConfig()) {
+      await loadProducts();
+    } else {
+      $("products").textContent = "Configuração do Firebase pendente.";
+      status("Cole os valores reais da configuração do Firebase.");
+    }
+  });
+</script>
 </body>
 </html>
