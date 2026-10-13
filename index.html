@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101014">
+  <title>VexModz Vendas</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #101014;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      padding: 22px 16px;
+      background: #19191f;
+      border-bottom: 1px solid #303039;
+      text-align: center;
+    }
+    header h1 { margin: 0; color: #a78bfa; }
+    header p { color: #aaa; margin-bottom: 0; }
+    main { max-width: 1000px; margin: auto; padding: 20px 16px; }
+    .hero {
+      padding: 28px 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #292044, #171720);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .hero h2 { margin-top: 0; }
+    .hero p { color: #ddd; line-height: 1.5; }
+    .section-title { margin: 24px 0 16px; }
+    #products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .product {
+      background: #1b1b23;
+      border: 1px solid #34343e;
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .product h3 { margin-top: 0; }
+    .price { color: #a78bfa; font-size: 23px; font-weight: bold; }
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 9px;
+      padding: 13px;
+      background: #8b5cf6;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .secondary {
+      background: #292932;
+      margin-top: 10px;
+    }
+    #status { color: #bbb; text-align: center; padding: 20px 0; }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #888;
+      border-top: 1px solid #303039;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>VEXMODZ VENDAS</h1>
+    <p>Sua loja de produtos digitais</p>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Bem-vindo à VexModz!</h2>
+      <p>Confira nossos produtos digitais e novidades.</p>
+      <button onclick="loginGoogle()">Entrar com Google</button>
+      <button class="secondary" onclick="loginEmail()">Entrar com e-mail</button>
+      <p id="userStatus">Você não está conectado.</p>
+      <button class="secondary" id="logout" onclick="sair()" hidden>Sair da conta</button>
+    </section>
+
+    <h2 class="section-title">Nossos produtos</h2>
+    <div id="products">
+      <p>Os produtos serão carregados quando conectarmos o Firebase.</p>
+    </div>
+    <p id="status">Catálogo da loja.</p>
+
+    <section id="admin" hidden>
+      <h2>Painel ADM</h2>
+      <p>Área exclusiva do proprietário.</p>
+      <p>O cadastro e a edição de produtos serão adicionados na próxima etapa.</p>
+    </section>
+  </main>
+
+  <footer>© 2026 VexModz Vendas</footer>
+
+  <script>
+    function loginGoogle() {
+      alert("O login Google será conectado ao Firebase na próxima etapa.");
+    }
+    function loginEmail() {
+      alert("O login por e-mail será conectado ao Firebase na próxima etapa.");
+    }
+    function sair() {
+      alert("O login será conectado ao Firebase na próxima etapa.");
+    }
+  </script>
+</body>
+</html>
